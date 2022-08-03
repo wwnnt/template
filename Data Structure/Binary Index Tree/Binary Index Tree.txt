@@ -1,0 +1,33 @@
+//树状数组
+struct Binary_Index_Tree{
+
+	int n;
+	ll tree[maxn];
+
+	void build(int len){
+		n = len;
+		for(int i=1;i<=len;i++)
+			tree[i] = 0;
+	}
+
+	ll lowbit(ll x){
+		return x&(-x);
+	}
+
+	void update(int x,ll k){
+		for(;x<=n;x+=lowbit(x))
+			tree[x] += k;
+	}
+
+	ll getsum(int x){
+		ll res = 0;
+		for(;x>0;x-=lowbit(x))
+			res += tree[x];
+		return res;
+	}
+
+	ll query(int l,int r){
+		return getsum(r)-getsum(l-1);
+	}
+
+};

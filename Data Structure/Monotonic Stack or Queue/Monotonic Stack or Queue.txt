@@ -51,7 +51,7 @@ struct Monotonic_Queue{
 	deque<MQ_node> q,req;
 	int L[maxn],R[maxn];
 
-	void insert(ll x,int p,int k,int flag){
+	void insert(int x,ll p,int k,ll flag){
 		if(flag==1)
 		{
 			while(!q.empty()&&q.front().pos<p-k+1)
