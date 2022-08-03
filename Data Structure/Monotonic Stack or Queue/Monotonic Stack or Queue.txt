@@ -1,3 +1,75 @@
-struct Monotonic Stack{
+//单调栈
+struct Monotonic_Stack{
 
-}ms;
+	struct MS_node{
+		int pos;
+		ll val;
+
+		MS_node(int p=0,ll v=0){
+			pos = p;
+			val = v;
+		}
+	};
+
+	stack<MS_node> st,rest;
+	int L[maxn],R[maxn];
+
+	void insert(ll x,int p,int flag){
+		if(flag==1)
+		{	
+			while(!st.empty()&&st.top().val<=x){
+				R[st.top().pos] = p-1;
+				st.pop();
+			}
+
+			st.push(MS_node(p,x));
+		}
+		else{
+			while(!rest.empty()&&rest.top().val<=x){
+				L[rest.top().pos] = p+1;
+				rest.pop();
+			}
+			rest.push(MS_node(p,x));
+		}
+	}
+
+};
+
+//单调队列
+struct Monotonic_Queue{
+
+	struct MQ_node{
+		int pos;
+		ll val;
+
+		MQ_node(int p=0,ll v=0){
+			pos = p;
+			val = v;
+		}
+	};
+
+	deque<MQ_node> q,req;
+	int L[maxn],R[maxn];
+
+	void insert(ll x,int p,int k,int flag){
+		if(flag==1)
+		{
+			while(!q.empty()&&q.front().pos<p-k+1)
+				q.pop_front();
+			while(!q.empty()&&q.back().val<=x){
+				q.pop_back();
+			}
+			q.push_back(MQ_node(p,x));
+			L[p] = q.front().pos;
+		}
+		else{
+			while(!req.empty()&&req.back().pos>p+k-1)
+				req.pop_back();
+			while(!req.empty()&&req.back().val<=x){
+				req.pop_back();
+			}
+			req.push_back(MQ_node(p,x));
+			R[p] = req.front().pos;
+		}
+	}
+};
