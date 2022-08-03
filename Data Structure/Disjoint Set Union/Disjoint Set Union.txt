@@ -1,0 +1,32 @@
+//并查集
+struct Disjoint_Set_Union{
+
+	int n;
+	int fa[maxn],siz[maxn];
+
+	void build(int len){
+		n = len;
+		for(int i=1;i<=len;i++)
+			fa[i] = i,siz[i] = 1;
+	}
+
+	int find(int x){
+		if(fa[x]!=x)
+			return fa[x] = find(fa[x]);
+		else
+			return fa[x];
+	}
+
+	void merge(int x,int y){
+		int fx = find(x);
+		int fy = find(y);
+
+		if(fx!=fy){
+			if(siz[fx]>siz[fy])
+				swap(fx,fy);
+			fa[fx] = fy;
+			siz[fy] += siz[fx];
+		}
+	}
+
+}dsu;
