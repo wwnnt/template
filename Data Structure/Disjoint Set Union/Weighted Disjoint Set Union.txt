@@ -1,0 +1,33 @@
+//带权并查集
+struct Weighted_Disjoint_Set_Union{
+
+	int n,m;
+	int fa[maxn];
+	ll val[maxn];
+
+	void build(int len,int mod){
+		n = len;
+		m = mod;
+		for(int i=1;i<=n;i++)
+			fa[i] = i,val[i] = 0;
+	}
+
+	int find(int x){
+		if(fa[x]!=x){
+			int t = fa[x];
+			fa[x] = find(fa[x]);
+			val[x] = (val[x]+val[t])%m;
+		}
+		return fa[x];
+	}
+
+	void merge(int x,int y,ll s){
+		int fx = find(x);
+		int fy = find(y);
+		if(fx!=fy){
+			fa[fx] = fy;
+			val[fx] = (-val[x] + val[y] + s + m)%m;
+		}
+	}
+
+};
