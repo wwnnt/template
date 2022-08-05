@@ -1,7 +1,7 @@
 //带权并查集
 struct Weighted_Disjoint_Set_Union{
 
-	int n,m;
+	int n;
 	int fa[maxn];
 	ll val[maxn];
 
@@ -16,7 +16,7 @@ struct Weighted_Disjoint_Set_Union{
 		if(fa[x]!=x){
 			int t = fa[x];
 			fa[x] = find(fa[x]);
-			val[x] = (val[x]+val[t])%m;
+			val[x] = val[x]+val[t];
 		}
 		return fa[x];
 	}
@@ -26,7 +26,7 @@ struct Weighted_Disjoint_Set_Union{
 		int fy = find(y);
 		if(fx!=fy){
 			fa[fx] = fy;
-			val[fx] = (-val[x] + val[y] + s + m)%m;
+			val[fx] = -val[x] + val[y] + s;
 		}
 	}
 
