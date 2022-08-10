@@ -1,0 +1,51 @@
+//后缀自动机
+struct Suffix_AutoMaton{
+
+	struct SAM_node{
+		int len,link;
+		int next[maxm];
+	}tr[maxn];
+
+	int cnt,last;
+
+	void build(string s){
+		cnt = 0;
+		last = 0;
+		tr[0].len = 0;
+		tr[0].link = -1;
+		for(int i=0;i<s.size();i++)
+			insert(s[i]-'a');
+	}
+
+	void insert(int c){
+		int now = ++cnt;
+		tr[now].len = tr[last].len + 1;
+		int pre = last;
+		while(pre!=-1&&!tr[pre].next[c]){
+			tr[pre].next[c] = now;
+			pre = tr[pre].link;
+		}
+
+		if(pre==-1){
+			tr[now].link = 0;
+		}
+		else{
+			int q = tr[pre].next[c];
+			if(tr[pre].len+1==tr[q].len){
+				tr[now].link = q;
+			}
+			else{
+				int clone = ++cnt;
+				tr[clone] = tr[q];
+				tr[clone].len = tr[pre].len + 1;
+				while(pre!=-1&&tr[pre].next[c]==q){
+					tr[pre].next[c] = clone;
+					pre = tr[pre].link;
+				}
+				tr[q].link = tr[now].link = clone;
+			}
+		}
+		last = now;
+	}
+
+};
